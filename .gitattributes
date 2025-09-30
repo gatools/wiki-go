@@ -1,2 +1,3 @@
-*.bat eol=crlf
-*.sh eol=lf
+# Set default behavior to automatically normalize line endings.
+* text=auto eol=lf
+*.{cmd,bat} text eol=crlf

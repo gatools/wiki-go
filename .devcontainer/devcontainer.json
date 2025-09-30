@@ -1,0 +1,30 @@
+{
+	"name": "Wiki-Go Dev Container",
+	"image": "golang:alpine",
+
+	"mounts": [
+		"source=${localWorkspaceFolder},target=/wiki-go,type=bind,consistency=cached"
+	],
+
+    "workspaceFolder": "/wiki-go",
+
+	// Features to add to the Dev Container. More info: https://containers.dev/implementors/features.
+	"features": {
+		"ghcr.io/cirolosapio/devcontainers-features/alpine-git:0": {},
+		"ghcr.io/cirolosapio/devcontainers-features/alpine-node:0": {}
+	},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [
+        8080
+    ],
+
+	// Configure tool-specific properties.
+	 "customizations": {
+        "vscode": {
+            "extensions": [
+                "golang.go"
+            ]
+        }
+     }
+}
