@@ -135,6 +135,16 @@ async function updatePreview(content) {
             }
         });
 
+        // Store PlantUML sources BEFORE any rendering happens
+        const plantumlDiagrams = previewElement.querySelectorAll('.plantuml');
+        plantumlDiagrams.forEach((diagram) => {
+            // Extract the original source from the rendered content
+            const textContent = diagram.textContent || diagram.innerText;
+            if (textContent && textContent.trim()) {
+                diagram.dataset.plantumlSource = textContent.trim();
+            }
+        });
+
         // Initialize any client-side renderers (Prism, MathJax, etc)
         if (window.Prism) {
             Prism.highlightAllUnder(previewElement);
@@ -168,7 +178,7 @@ window.EditorPreview = {
     togglePreview,
     updatePreview,
     cleanup,
-    
+
     // Getters
     getPreviewElement: () => previewElement
 };

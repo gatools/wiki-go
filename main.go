@@ -27,6 +27,9 @@ func main() {
 		log.Fatal("Error loading config:", err)
 	}
 
+	// Put global config
+	config.Cfg = cfg
+
 	// Ensure the homepage exists
 	if err := handlers.EnsureHomepageExists(cfg); err != nil {
 		log.Fatal("Error creating homepage:", err)

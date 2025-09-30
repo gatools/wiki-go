@@ -43,10 +43,11 @@ func splitCodeSections(markdown string) []Section {
 	inlineMathPattern := "\\$[^\\$\\n]+?\\$"
 	blockMathPattern := "\\$\\$[\\s\\S]*?\\$\\$"
 	mermaidDivPattern := "<div class=\"mermaid\">[\\s\\S]*?</div>"
+	plantumlDivPattern := "<div class=\"plantuml\">[\\s\\S]*?</div>"
 
 	// Combine patterns to find all protected sections
-	combinedPattern := fmt.Sprintf("(?s)(%s|%s|%s|%s|%s)",
-		codeBlockPattern, inlineCodePattern, inlineMathPattern, blockMathPattern, mermaidDivPattern)
+	combinedPattern := fmt.Sprintf("(?s)(%s|%s|%s|%s|%s|%s)",
+		codeBlockPattern, inlineCodePattern, inlineMathPattern, blockMathPattern, mermaidDivPattern, plantumlDivPattern)
 
 	// Use (?s) flag to make . match newlines and compile with DOTALL flag for better performance with large inputs
 	re := regexp.MustCompile(combinedPattern)

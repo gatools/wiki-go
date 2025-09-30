@@ -28,6 +28,7 @@ var (
 	RoleAdmin  = roles.RoleAdmin  // Can do anything
 	RoleEditor = roles.RoleEditor // Can edit documents and post comments
 	RoleViewer = roles.RoleViewer // Can only view documents and post comments
+	Cfg        = &Config{}        // Global config variable
 )
 
 // Config represents the server configuration
@@ -73,6 +74,13 @@ type Config struct {
 			MaxBanSeconds     int  `yaml:"max_ban_seconds"`
 		} `yaml:"login_ban"`
 	} `yaml:"security"`
+	Extensions struct {
+		PlantUML struct {
+			Enable      bool   `yaml:"enable"`
+			ServerURL   string `yaml:"server_url"`   // Default to "https://www.plantuml.com/plantuml/"
+			ImageFormat string `yaml:"image_format"` // "svg" or "png", default "svg"
+		} `yaml:"plantuml"`
+	} `yaml:"extensions"`
 }
 
 // LoadConfig loads the configuration from a YAML file
@@ -108,6 +116,11 @@ func LoadConfig(path string) (*Config, error) {
 	config.Security.LoginBan.WindowSeconds = 180
 	config.Security.LoginBan.InitialBanSeconds = 60
 	config.Security.LoginBan.MaxBanSeconds = 86400 // 24h
+
+	// Extensions defaults
+	config.Extensions.PlantUML.Enable = true
+	config.Extensions.PlantUML.ServerURL = "https://www.plantuml.com/plantuml"
+	config.Extensions.PlantUML.ImageFormat = "svg"
 
 	// Read config file
 	data, err := os.ReadFile(path)
@@ -171,6 +184,9 @@ func LoadConfig(path string) (*Config, error) {
 				config.Security.LoginBan.InitialBanSeconds,
 				config.Security.LoginBan.MaxBanSeconds,
 				usersStr.String(),
+				config.Extensions.PlantUML.Enable,
+				config.Extensions.PlantUML.ServerURL,
+				config.Extensions.PlantUML.ImageFormat,
 			)
 
 			// Write the config file
@@ -249,7 +265,17 @@ security:
         # Maximum ban duration in seconds (24 hours)
         max_ban_seconds: %d
 users:
-%s`
+%s
+extensions:
+    plantuml:
+        # Enable PlantUML diagram rendering
+        enable: %t
+        # PlantUML server URL, e.g. "https://www.plantuml.com/plantuml"
+		# or a self-hosted instance like "http://plantuml_container:8080"
+        server_url: "%s"
+        # PlantUML image format: "svg" or "png"
+        image_format: "%s"
+`
 }
 
 // FormatUserEntry formats a single user entry for the config file
@@ -299,6 +325,9 @@ func SaveConfig(cfg *Config, w io.Writer) error {
 		cfg.Security.LoginBan.InitialBanSeconds,
 		cfg.Security.LoginBan.MaxBanSeconds,
 		usersStr.String(),
+		cfg.Extensions.PlantUML.Enable,
+		cfg.Extensions.PlantUML.ServerURL,
+		cfg.Extensions.PlantUML.ImageFormat,
 	)
 
 	_, err := w.Write([]byte(configData))

@@ -71,6 +71,7 @@ func RenderMarkdownWithPath(md string, docPath string) []byte {
 		// Add post-processors for mermaid and direction blocks
 		postProcessors = append(postProcessors, func(html string) string {
 			result := goldext.RestoreMermaidBlocks(html)
+			result = goldext.RestorePlantUMLBlocks(result)
 			result = goldext.RestoreDirectionBlocks(result)
 			return result
 		})
@@ -135,6 +136,9 @@ func RenderMarkdownWithPath(md string, docPath string) []byte {
 
 	// Post-process: Restore Mermaid blocks that were replaced with placeholders
 	htmlResult := goldext.RestoreMermaidBlocks(buf.String())
+
+	// Post-process: Restore PlantUML blocks that were replaced with placeholders
+	htmlResult = goldext.RestorePlantUMLBlocks(htmlResult)
 
 	// Post-process: Restore Direction blocks that were replaced with placeholders
 	// This ensures RTL/LTR content is properly rendered with Markdown formatting

@@ -60,7 +60,7 @@ If you're running LeoMoon Wiki-Go without SSL/HTTPS and experiencing login issue
 - **Dark/Light Theme**: Toggle between dark and light modes
 - **Code Syntax Highlighting**: Support for multiple programming languages
 - **Math Rendering**: LaTeX math formula support via MathJax
-- **Diagrams**: Mermaid diagram integration for creating flowcharts, sequence diagrams, etc.
+- **Diagrams**: Mermaid/PlantUML diagram integration for creating flowcharts, sequence diagrams, etc.
 
 ### Administration
 - **User Management**: Create and manage users with different permission levels
@@ -386,7 +386,9 @@ $$
 \frac{d}{dx}(x^n) = nx^{n-1}
 $$
 
-### Diagrams (Mermaid)
+### Diagrams
+
+#### Mermaid
 
 ` + "```mermaid" + `
 graph TD;
@@ -394,6 +396,15 @@ graph TD;
     A-->C;
     B-->D;
     C-->D;
+` + "```" + `
+
+#### PlantUML
+
+` + "```plantuml" + `
+@startuml
+Alice -> Bob: Hello
+Bob -> Alice: Hi
+@enduml
 ` + "```" + `
 
 ## Additional Markdown Features
@@ -525,7 +536,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request, cfg *config.Config) {
 	// Get authentication status
 	session := auth.GetSession(r)
 	isAuthenticated := session != nil
-	
+
 	// Get user role
 	userRole := ""
 	if isAuthenticated && session != nil {

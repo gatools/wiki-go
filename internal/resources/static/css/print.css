@@ -210,6 +210,47 @@
         stroke: black !important;
     }
 
+    /* PlantUML diagram print styles - force light theme */
+    .plantuml {
+        background-color: white !important;
+    }
+
+    .plantuml svg {
+        background-color: white !important;
+        filter: none !important;
+    }
+
+    /* All plantuml SVG elements */
+    .plantuml svg rect,
+    .plantuml svg polygon,
+    .plantuml svg circle,
+    .plantuml svg ellipse,
+    .plantuml svg path,
+    .plantuml svg .node rect,
+    .plantuml svg .node circle,
+    .plantuml svg .node ellipse,
+    .plantuml svg .node polygon,
+    .plantuml svg .cluster rect {
+        fill: white !important;
+        stroke: black !important;
+    }
+
+    /* All plantuml text elements */
+    .plantuml svg .label,
+    .plantuml svg text,
+    .plantuml svg .edgeLabel {
+        color: black !important;
+        fill: black !important;
+    }
+
+    .plantuml svg .edgeLabel {
+        background-color: white !important;
+    }
+
+    .plantuml svg .edgePath .path {
+        stroke: black !important;
+    }
+
     /* Task list checkboxes */
     .task-checkbox {
         -webkit-print-color-adjust: exact !important;

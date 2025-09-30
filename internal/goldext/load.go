@@ -8,6 +8,7 @@ package goldext
 var (
 	_ = LinkPreprocessor
 	_ = MermaidPreprocessor
+	_ = PlantUMLPreprocessor
 	_ = DirectionPreprocessor
 	_ = MP4Preprocessor
 	_ = YouTubePreprocessor
@@ -33,8 +34,9 @@ func init() {
 	// Step 0: Process frontmatter FIRST, before any other processors
 	RegisterPreprocessor(FrontmatterPreprocessor) // Process frontmatter
 
-	// Step 1: Process Mermaid FIRST, before any other processors can touch the content
-	RegisterPreprocessor(MermaidPreprocessor) // Process mermaid diagrams first
+	// Step 1: Process Mermaid/PlantUML FIRST, before any other processors can touch the content
+	RegisterPreprocessor(MermaidPreprocessor)  // Process mermaid diagrams first
+	RegisterPreprocessor(PlantUMLPreprocessor) // Process PlantUML diagrams first
 
 	// Step 2: Security-related preprocessing (add this early to sanitize content before other processors)
 	RegisterPreprocessor(ScriptSanitizePreprocessor) // Sanitize script tags

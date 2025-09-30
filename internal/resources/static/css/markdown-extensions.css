@@ -187,6 +187,65 @@ mark {
     pointer-events: none;
 }
 
+/* PlantUML diagrams */
+.plantuml {
+    margin: 20px 0;
+    overflow: auto;
+    text-align: center;
+    background-color: transparent;
+    border-radius: 4px;
+    padding: 10px 0;
+    transition: opacity 0.2s ease;
+    color: transparent; /* Hide raw text content */
+    font-size: 0; /* Hide text completely */
+    line-height: 0;
+}
+
+/* Show the SVG once rendered */
+.plantuml svg {
+    transition: opacity 0.15s ease;
+    color: initial;
+    font-size: initial;
+    line-height: initial;
+}
+
+/* Override text hiding when SVG is present */
+.plantuml:has(svg) {
+    color: initial;
+    font-size: initial;
+    line-height: initial;
+}
+
+/* Fallback for browsers that don't support :has() */
+.plantuml.plantuml-rendered {
+    color: initial;
+    font-size: initial;
+    line-height: initial;
+}
+
+/* PlantUML diagram loading states for theme switching */
+.plantuml-rerendering {
+    position: relative;
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+}
+
+.plantuml-rerendering::after {
+    content: "Switching theme...";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--background-color);
+    color: var(--text-color);
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 0.85em;
+    border: 1px solid var(--border-color);
+    z-index: 10;
+    pointer-events: none;
+}
+
 /* Screen-specific styles */
 @media screen {
     .video-print-placeholder {
